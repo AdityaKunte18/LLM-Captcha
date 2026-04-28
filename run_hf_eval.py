@@ -245,7 +245,7 @@ def run_attention():
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    model_name, model_id = MODELS[0]
+    model_name, model_id = MODELS[1]
 
     samples = load_samples(dataset_dir)
     samples_by_file = {sample["filename"]: sample for sample in samples}

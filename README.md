@@ -6,6 +6,7 @@
   - `numpy`: For numerical operations and noise generation
   - `pillow`: For image rendering and filter applications
   - `matplotlib`: For system font management and path resolution
+  - `opencv-python`: For cleaning, morphology, connected-component analysis, and proxy evaluation
 
 ### Dataset Generation Features
 The generator creates CAPTCHA images by interleaving mathematical expressions with multiple layers of visual distortion.
@@ -35,3 +36,17 @@ Generated samples are saved in the captcha_dataset/ directory
     - label: The evaluated Ground Truth.
     - difficulty: The noise intensity level used.
     - params: Exact hyperparameters for every noise type.
+
+## Cleaning Pipeline
+The `cleaning/` package adds a classical CV preprocessing pipeline for denoising and normalizing noisy CAPTCHA images.
+
+- `cleaning/pipeline.py`: Single-image cleaner that outputs grayscale and binary cleaned images plus per-image stats.
+- `cleaning/run_batch.py`: Batch processor that writes `cleaned_gray/`, `cleaned_binary/`, and `cleaning_metrics.json`.
+- `cleaning/reference.py`: Clean-reference renderer used for proxy evaluation without modifying the generator.
+- `cleaning/evaluate.py`: Proxy evaluator that regenerates clean references from the stored expression and compares raw vs cleaned variants.
+
+### Run the pipeline
+```bash
+python3 -m cleaning.run_batch --dataset-dir captcha_dataset --output-dir cleaned_dataset
+python3 -m cleaning.evaluate --dataset-dir captcha_dataset --cleaned-dir cleaned_dataset
+```

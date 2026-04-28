@@ -4,6 +4,10 @@ import json
 import re
 import time
 from pathlib import Path
+import torch
+from PIL import Image
+import torch
+from transformers import AutoModelForImageTextToText, AutoProcessor
 
 
 TRANSCRIBE_PROMPT = """
@@ -58,9 +62,6 @@ def load_samples(dataset_dir):
 
 
 def load_model(model_id):
-    import torch
-    from transformers import AutoModelForImageTextToText, AutoProcessor
-
     processor = AutoProcessor.from_pretrained(model_id)
 
     model_kwargs = {
@@ -76,8 +77,6 @@ def load_model(model_id):
 
 
 def ask_model(processor, model, image, prompt, max_new_tokens=16):
-    import torch
-
     messages = [
         {
             "role": "user",
@@ -205,9 +204,6 @@ def write_summary(predictions_path, summary_path):
 
 
 def run_benchmark():
-    import torch
-    from PIL import Image
-
     dataset_dir = Path(DATASET_DIR)
     output_dir = Path(OUTPUT_DIR)
 

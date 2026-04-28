@@ -245,131 +245,140 @@ def run_attention():
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    model_name, model_id = MODELS[1]
-
     samples = load_samples(dataset_dir)
     samples_by_file = {sample["filename"]: sample for sample in samples}
 
     predictions_path = Path(OUTPUT_DIR) / "predictions.jsonl"
 
-    correct_rows = []
-
+    prediction_rows = []
     with predictions_path.open("r", encoding="utf-8") as f:
         for line in f:
             if not line.strip():
                 continue
+            prediction_rows.append(json.loads(line))
 
-            row = json.loads(line)
+    attention_runs = []
 
+    for model_name, model_id in MODELS[1:]:
+        correct_rows = []
+
+        for row in prediction_rows:
             if row["model"] == model_name and row["correct"]:
                 correct_rows.append(row)
 
-    selected_samples = []
+        selected_samples = []
 
-    for row in correct_rows[:12]:
-        selected_samples.append(samples_by_file[row["filename"]])
+        for row in correct_rows[:12]:
+            selected_samples.append(samples_by_file[row["filename"]])
 
-    processor, model = load_model(model_id, output_attentions=True)
+        processor, model = load_model(model_id, output_attentions=True)
 
-    results = []
+        results = []
 
-    for sample in selected_samples:
-        image = Image.open(sample["image_path"]).convert("RGB")
+        for sample in selected_samples:
+            image = Image.open(sample["image_path"]).convert("RGB")
 
-        raw_output, inputs, output = ask_model(
-            processor,
-            model,
-            image,
-            max_new_tokens=4,
-            output_attentions=True,
-        )
+            raw_output, inputs, output = ask_model(
+                processor,
+                model,
+                image,
+                max_new_tokens=4,
+                output_attentions=True,
+            )
 
-        input_ids = inputs["input_ids"]
-        input_len = input_ids.shape[-1]
+            input_ids = inputs["input_ids"]
+            input_len = input_ids.shape[-1]
 
-        tokens = processor.tokenizer.convert_ids_to_tokens(
-            input_ids[0].detach().cpu().tolist()
-        )
+            tokens = processor.tokenizer.convert_ids_to_tokens(
+                input_ids[0].detach().cpu().tolist()
+            )
 
-        image_positions = []
+            image_positions = []
 
-        for i, token in enumerate(tokens):
-            token = token.lower()
+            for i, token in enumerate(tokens):
+                token = token.lower()
 
-            if "image" in token or "vision" in token or "img" in token:
-                image_positions.append(i)
+                if "image" in token or "vision" in token or "img" in token:
+                    image_positions.append(i)
 
-        last_step_attention = output.attentions[-1]
-        last_layer_attention = last_step_attention[-1]
+            last_step_attention = output.attentions[-1]
+            last_layer_attention = last_step_attention[-1]
 
-        #get average over attention heads
-        attention = (last_layer_attention[0, :, -1, :].mean(dim=0).detach().float().cpu().numpy())
+            #get average over attention heads
+            attention = (last_layer_attention[0, :, -1, :].mean(dim=0).detach().float().cpu().numpy())
 
-        attention = attention[:input_len]
-        image_attention = attention[image_positions]
+            attention = attention[:input_len]
+            image_attention = attention[image_positions]
 
-        stem = Path(sample["filename"]).stem
+            stem = Path(sample["filename"]).stem
 
-        npz_path = output_dir / f"{stem}_{model_name}_attention.npz"
-        heatmap_path = output_dir / f"{stem}_{model_name}_heatmap.png"
+            npz_path = output_dir / f"{stem}_{model_name}_attention.npz"
+            heatmap_path = output_dir / f"{stem}_{model_name}_heatmap.png"
 
-        np.savez_compressed(
-            npz_path,
-            attention_to_input=attention,
-            image_token_positions=np.asarray(image_positions),
-            attention_to_image_tokens=image_attention,
-            filename=sample["filename"],
-            model=model_name,
-        )
+            np.savez_compressed(
+                npz_path,
+                attention_to_input=attention,
+                image_token_positions=np.asarray(image_positions),
+                attention_to_image_tokens=image_attention,
+                filename=sample["filename"],
+                model=model_name,
+            )
 
-        heatmap_result = None
+            heatmap_result = None
+            attention_status = "ok"
+            token_count = len(image_attention)
 
-        token_count = len(image_attention)
+            if token_count == 0:
+                attention_status = "no_image_tokens"
+            elif not np.isfinite(image_attention).any():
+                attention_status = "all_nan"
+            else:
+                cols = math.ceil(math.sqrt(token_count))
+                rows = math.ceil(token_count / cols)
 
-        if token_count > 0:
-            cols = math.ceil(math.sqrt(token_count))
-            rows = math.ceil(token_count / cols)
+                padded = np.full(rows * cols, np.nan, dtype=float)
+                padded[:token_count] = image_attention
 
-            padded = np.full(rows * cols, np.nan, dtype=float)
-            padded[:token_count] = image_attention
+                grid = padded.reshape(rows, cols)
 
-            grid = padded.reshape(rows, cols)
+                plt.figure(figsize=(4, 4))
+                plt.imshow(grid, cmap="magma")
+                plt.title(f"{model_name}: {sample['filename']}")
+                plt.axis("off")
+                plt.tight_layout()
+                plt.savefig(heatmap_path)
+                plt.close()
 
-            plt.figure(figsize=(4, 4))
-            plt.imshow(grid, cmap="magma")
-            plt.title(f"{model_name}: {sample['filename']}")
-            plt.axis("off")
-            plt.tight_layout()
-            plt.savefig(heatmap_path)
-            plt.close()
+                heatmap_result = str(heatmap_path)
 
-            heatmap_result = str(heatmap_path)
+            results.append(
+                {
+                    "filename": sample["filename"],
+                    "raw_output": raw_output,
+                    "npz": str(npz_path),
+                    "heatmap": heatmap_result,
+                    "image_token_count": len(image_positions),
+                    "attention_status": attention_status,
+                }
+            )
 
-        results.append(
+        attention_runs.append(
             {
-                "filename": sample["filename"],
-                "raw_output": raw_output,
-                "npz": str(npz_path),
-                "heatmap": heatmap_result,
-                "image_token_count": len(image_positions),
+                "model": model_name,
+                "model_id": model_id,
+                "samples_processed": len(results),
+                "results": results,
             }
         )
 
-    note = {
-        "model": model_name,
-        "model_id": model_id,
-        "samples_processed": len(results),
-        "results": results,
-    }
+        del model
+        del processor
+
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
 
     note_path = output_dir / "attention_note.json"
-    note_path.write_text(json.dumps(note, indent=2), encoding="utf-8")
-
-    del model
-    del processor
-
-    if torch.cuda.is_available():
-        torch.cuda.empty_cache()
+    note_path.write_text(json.dumps({"runs": attention_runs}, indent=2), encoding="utf-8")
 
     print(f"Wrote attention files to {output_dir}")
 

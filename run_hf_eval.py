@@ -324,10 +324,16 @@ def run_attention():
 
         heatmap_result = None
 
-        side = int(math.sqrt(len(image_attention)))
+        token_count = len(image_attention)
 
-        if side * side == len(image_attention):
-            grid = np.asarray(image_attention).reshape(side, side)
+        if token_count > 0:
+            cols = math.ceil(math.sqrt(token_count))
+            rows = math.ceil(token_count / cols)
+
+            padded = np.full(rows * cols, np.nan, dtype=float)
+            padded[:token_count] = image_attention
+
+            grid = padded.reshape(rows, cols)
 
             plt.figure(figsize=(4, 4))
             plt.imshow(grid, cmap="magma")

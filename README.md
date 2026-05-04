@@ -50,3 +50,10 @@ The `cleaning/` package adds a classical CV preprocessing pipeline for denoising
 python3 -m cleaning.run_batch --dataset-dir captcha_dataset --output-dir cleaned_dataset
 python3 -m cleaning.evaluate --dataset-dir captcha_dataset --cleaned-dir cleaned_dataset
 ```
+
+### Run the Frontier Model Evaluation
+- `legacy_model_evaluation.py`: run GPT-4o or Gemini-3-flash-preview to output the evaluation. 
+```bash
+python legacy_model_evaluation.py run --provider gemini
+python legacy_model_evaluation.py run --provider gpt_4o
+```

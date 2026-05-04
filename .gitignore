@@ -8,3 +8,7 @@ cleaned_dataset/cleaned_gray/*.png
 captcha_dataset/captcha_dataset/*.png
 cleaning/__pycache__/
 __pycache__/
+
+plot_difficulty.py
+
+outputs/

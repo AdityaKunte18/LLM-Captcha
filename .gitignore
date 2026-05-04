@@ -2,7 +2,6 @@ CS 543 Project Proposal.pdf
 requirements.txt
 captcha_dataset/*.png
 captcha_dataset/metadata.json
-captcha_dataset/captcha_dataset/
 
 cleaned_dataset/cleaned_binary/*.png
 cleaned_dataset/cleaned_gray/*.png

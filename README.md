@@ -35,3 +35,18 @@ Generated samples are saved in the captcha_dataset/ directory
     - label: The evaluated Ground Truth.
     - difficulty: The noise intensity level used.
     - params: Exact hyperparameters for every noise type.
+
+
+### For experiment with HF models
+
+1. !pip install -q -U transformers accelerate bitsandbytes qwen-vl-utils pillow
+2. Clone the repo / mount
+3. Unzip the dataset first so `captcha_dataset/metadata.json` and the PNG files are present
+
+```
+python run_hf_eval.py run
+```
+
+The benchmark asks each model to do two tasks:
+- transcribe the CAPTCHA expression
+- solve the CAPTCHA expression

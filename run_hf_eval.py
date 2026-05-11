@@ -1,12 +1,12 @@
 import argparse
 import csv
 import json
+import random
 import re
 import time
 from pathlib import Path
 import torch
 from PIL import Image
-import torch
 from transformers import AutoModelForImageTextToText, AutoProcessor
 
 
@@ -56,9 +56,16 @@ def load_samples(dataset_dir):
             return int(match.group())
         return 0
 
-#sort samples by their name instead of metadata
+    #sort samples by their name instead of metadata
     samples = sorted(samples, key=get_file_number)
-    return samples[:200]
+
+    #take a random sample, but use the same seed so every model gets the same images
+    random.seed(42)
+    if len(samples) > 200:
+        samples = random.sample(samples, 200)
+
+    samples = sorted(samples, key=get_file_number)
+    return samples
 
 
 def load_model(model_id):

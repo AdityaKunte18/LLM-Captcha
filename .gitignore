@@ -2,3 +2,13 @@ CS 543 Project Proposal.pdf
 requirements.txt
 captcha_dataset/*.png
 captcha_dataset/metadata.json
+
+cleaned_dataset/cleaned_binary/*.png
+cleaned_dataset/cleaned_gray/*.png
+captcha_dataset/captcha_dataset/*.png
+cleaning/__pycache__/
+__pycache__/
+
+plot_difficulty.py
+
+outputs/

@@ -61,8 +61,7 @@ def load_samples(dataset_dir):
 
     #take a random sample, but use the same seed so every model gets the same images
     random.seed(42)
-    if len(samples) > 200:
-        samples = random.sample(samples, 200)
+    samples = random.sample(samples, 800)
 
     samples = sorted(samples, key=get_file_number)
     return samples

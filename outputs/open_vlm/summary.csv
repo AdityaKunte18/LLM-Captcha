@@ -1,4 +1,4 @@
 model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
-qwen2_vl_2b,200,76,0.3800,37,0.1850,0.3541,0.1674,0.5215
-smolvlm_500m,200,49,0.2450,10,0.0500,0.7581,0.6466,1.4046
-smolvlm2_2b,200,79,0.3950,14,0.0700,1.0038,0.8690,1.8728
+qwen2_vl_2b,800,284,0.3550,128,0.1600,0.3589,0.1768,0.5357
+smolvlm_500m,800,173,0.2162,35,0.0437,0.7416,0.6274,1.3689
+smolvlm2_2b,800,286,0.3575,45,0.0563,0.9355,0.7940,1.7295

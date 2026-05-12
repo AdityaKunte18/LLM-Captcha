@@ -1,0 +1,10 @@
+dimension,bucket,model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,transcribed_value_correct,transcribed_value_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
+contains_operator,addition,qwen2_vl_2b,376,136,0.3617,59,0.1569,141,0.3750,0.3771,0.1764,0.5536
+contains_operator,addition,smolvlm2_2b,376,114,0.3032,23,0.0612,115,0.3059,0.9623,0.7928,1.7551
+contains_operator,addition,smolvlm_500m,376,42,0.1117,7,0.0186,42,0.1117,0.7819,0.6376,1.4194
+contains_operator,multiplication,qwen2_vl_2b,359,104,0.2897,35,0.0975,109,0.3036,0.3602,0.1783,0.5385
+contains_operator,multiplication,smolvlm2_2b,359,122,0.3398,18,0.0501,123,0.3426,0.9442,0.7983,1.7425
+contains_operator,multiplication,smolvlm_500m,359,84,0.2340,16,0.0446,90,0.2507,0.7340,0.6360,1.3700
+contains_operator,subtraction,qwen2_vl_2b,331,119,0.3595,45,0.1360,126,0.3807,0.3772,0.1758,0.5529
+contains_operator,subtraction,smolvlm2_2b,331,116,0.3505,17,0.0514,119,0.3595,0.9380,0.7923,1.7303
+contains_operator,subtraction,smolvlm_500m,331,86,0.2598,19,0.0574,91,0.2749,0.7373,0.6329,1.3702

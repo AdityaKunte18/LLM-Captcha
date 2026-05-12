@@ -1,0 +1,10 @@
+dimension,bucket,model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,transcribed_value_correct,transcribed_value_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
+answer_magnitude,0_to_5,qwen2_vl_2b,237,92,0.3882,46,0.1941,98,0.4135,0.3415,0.1718,0.5133
+answer_magnitude,0_to_5,smolvlm2_2b,237,91,0.3840,24,0.1013,94,0.3966,0.9156,0.7912,1.7067
+answer_magnitude,0_to_5,smolvlm_500m,237,66,0.2785,22,0.0928,70,0.2954,0.7231,0.6207,1.3438
+answer_magnitude,21_plus,qwen2_vl_2b,205,63,0.3073,13,0.0634,63,0.3073,0.3659,0.1813,0.5472
+answer_magnitude,21_plus,smolvlm2_2b,205,78,0.3805,5,0.0244,78,0.3805,0.9376,0.7939,1.7316
+answer_magnitude,21_plus,smolvlm_500m,205,49,0.2390,2,0.0098,49,0.2390,0.7285,0.6325,1.3610
+answer_magnitude,6_to_20,qwen2_vl_2b,358,129,0.3603,69,0.1927,133,0.3715,0.3665,0.1776,0.5441
+answer_magnitude,6_to_20,smolvlm2_2b,358,117,0.3268,16,0.0447,117,0.3268,0.9475,0.7960,1.7434
+answer_magnitude,6_to_20,smolvlm_500m,358,58,0.1620,11,0.0307,60,0.1676,0.7612,0.6288,1.3900

@@ -1,0 +1,10 @@
+dimension,bucket,model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,transcribed_value_correct,transcribed_value_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
+difficulty,high,qwen2_vl_2b,285,9,0.0316,6,0.0211,13,0.0456,0.3466,0.1665,0.5132
+difficulty,high,smolvlm2_2b,285,20,0.0702,9,0.0316,20,0.0702,0.9719,0.7883,1.7603
+difficulty,high,smolvlm_500m,285,8,0.0281,13,0.0456,10,0.0351,0.7893,0.6220,1.4114
+difficulty,low,qwen2_vl_2b,261,206,0.7893,92,0.3525,207,0.7931,0.3536,0.1869,0.5405
+difficulty,low,smolvlm2_2b,261,194,0.7433,25,0.0958,194,0.7433,0.9113,0.7986,1.7099
+difficulty,low,smolvlm_500m,261,137,0.5249,16,0.0613,137,0.5249,0.6994,0.6338,1.3332
+difficulty,medium,qwen2_vl_2b,254,69,0.2717,30,0.1181,74,0.2913,0.3782,0.1779,0.5561
+difficulty,medium,smolvlm2_2b,254,72,0.2835,11,0.0433,75,0.2953,0.9196,0.7956,1.7152
+difficulty,medium,smolvlm_500m,254,28,0.1102,6,0.0236,32,0.1260,0.7313,0.6267,1.3579

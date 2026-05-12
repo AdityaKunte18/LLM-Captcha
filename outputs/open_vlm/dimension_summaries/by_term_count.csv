@@ -1,0 +1,7 @@
+dimension,bucket,model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,transcribed_value_correct,transcribed_value_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
+term_count,2,qwen2_vl_2b,407,169,0.4152,98,0.2408,171,0.4201,0.3088,0.1743,0.4831
+term_count,2,smolvlm2_2b,407,175,0.4300,27,0.0663,176,0.4324,0.8870,0.7927,1.6797
+term_count,2,smolvlm_500m,407,106,0.2604,22,0.0541,107,0.2629,0.6957,0.6031,1.2988
+term_count,3,qwen2_vl_2b,393,115,0.2926,30,0.0763,123,0.3130,0.4109,0.1794,0.5903
+term_count,3,smolvlm2_2b,393,111,0.2824,18,0.0458,113,0.2875,0.9857,0.7954,1.7811
+term_count,3,smolvlm_500m,393,67,0.1705,13,0.0331,72,0.1832,0.7890,0.6525,1.4415

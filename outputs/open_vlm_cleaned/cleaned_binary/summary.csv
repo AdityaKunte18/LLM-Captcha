@@ -1,0 +1,4 @@
+model,total,transcription_correct,transcription_accuracy,solve_correct,solve_accuracy,average_transcribe_latency_seconds,average_solve_latency_seconds,average_total_latency_seconds
+qwen2_vl_2b,800,254,0.3175,126,0.1575,0.3845,0.1924,0.5769
+smolvlm_500m,800,177,0.2213,19,0.0238,0.8677,0.8122,1.6798
+smolvlm2_2b,800,263,0.3287,24,0.0300,0.9839,0.8415,1.8254

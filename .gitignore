@@ -2,6 +2,7 @@ CS 543 Project Proposal.pdf
 requirements.txt
 captcha_dataset/*.png
 captcha_dataset/metadata.json
+captcha_dataset/captcha_dataset
 
 cleaned_dataset/cleaned_binary/*.png
 cleaned_dataset/cleaned_gray/*.png
@@ -11,4 +12,7 @@ __pycache__/
 
 plot_difficulty.py
 
-outputs/
+/outputs/Frontier_model_outputs
+/outputs/Frontier_model_outputs_cleaned
+
+plot_clean_noisy_comparision.py
